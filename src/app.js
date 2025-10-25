@@ -8,6 +8,5 @@ app.use(express.json());
 
 // Rutas base
 app.use("/", routes);
-app.use("/api", routes);
 
 export default app;
