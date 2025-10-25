@@ -6,7 +6,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Rutas base
+// Solo una ruta base (sin /api)
 app.use("/", routes);
 
 export default app;
