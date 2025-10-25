@@ -1,16 +1,8 @@
-import express from "express";
+// src/server.js
 import dotenv from "dotenv";
-import cors from "cors";
-import routes from "./routes/index.js";
+import app from "./app.js";
 
 dotenv.config();
-
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-// Ruta base
-app.use("/api", routes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
