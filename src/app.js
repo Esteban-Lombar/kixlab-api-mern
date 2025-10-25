@@ -1,26 +1,30 @@
-// src/app.js
-import express from "express";
 import cors from "cors";
+import express from "express";
 import routes from "./routes/index.js";
 
 const app = express();
 
-// Orígenes permitidos (local + producción)
+// 🌍 dominios permitidos (local y producción)
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://kixlab-app.vercel.app"
+  "https://kixlab.vercel.app" // ✅ frontend en producción
 ];
 
-app.use(cors({
-  origin: allowedOrigins,
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("No permitido por CORS"));
+      }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  })
+);
 
 app.use(express.json());
-
-// Rutas principales
 app.use("/", routes);
 
-// ⚠️ ESTE ES EL PUNTO CLAVE
 export default app;
